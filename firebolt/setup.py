@@ -1,6 +1,6 @@
 import time
 
-import teapot
+import firebolt
 
 
 def __init__():
@@ -48,7 +48,7 @@ def __init__():
     input_osu_api_key = input("osu!api Key")
 
     try:
-        config = f"""CONFIG_VERSION={teapot.config_version()}
+        config = f"""CONFIG_VERSION={firebolt.config_version()}
 BOT_TOKEN={input_bot_token}
 BOT_PREFIX={input_bot_prefix}
 BOT_STATUS={input_bot_status}

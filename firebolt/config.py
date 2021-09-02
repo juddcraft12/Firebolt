@@ -1,6 +1,6 @@
 import os
 
-import teapot
+import firebolt
 
 
 def bot_owner():
@@ -15,7 +15,7 @@ def bot_prefix():
 
 
 def bot_status():
-    default_prefix = f'{", ".join(teapot.config.bot_prefix())} | Teapot.py {teapot.version()}'
+    default_prefix = f'{", ".join(firebolt.config.bot_prefix())} | Teapot.py {firebolt.version()}'
     try:
         return os.environ['BOT_STATUS']
     except:

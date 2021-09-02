@@ -4,22 +4,23 @@ import time
 import typing
 
 
-import teapot
+import firebolt
 
 
-class Commands(discord.ext.commands.Cog):
+class Moderation(discord.ext.commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @discord.ext.commands.command(aliases=['?'])
     async def help(self, ctx, *cog):
         if not cog:
-            embed = discord.Embed(description="📖 Help", color=0x7400FF,
+            embed = discord.Embed(description="📖 Help", color=0xEEB551,
                                   icon_url="https://cdn.discordapp.com/avatars/612634758744113182"
                                            "/7fe078b5ea6b43000dfb7964e3e4d21d.png?size=512")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/embed/avatars/2.png")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/840230433178124299/abb04ca910c2c38ea44c7381ce1e3df6.png?size=1024")
             cogs_desc = ""
             for x in self.bot.cogs:
+              
                 cogs_desc += f'**{x}** - {self.bot.cogs[x].__doc__}\n'
             embed.add_field(name='Modules', value=cogs_desc[0:len(cogs_desc) - 1])
             embed.set_footer(text=f"Antimatter made this with zero sleep and zero will to live | Code licensed under the MIT License")
@@ -27,14 +28,14 @@ class Commands(discord.ext.commands.Cog):
             await ctx.message.add_reaction(emoji='✅')
         else:
             if len(cog) > 1:
-                await ctx.send(embed=teapot.messages.toomanyarguments())
+                await ctx.send(embed=firebolt.messages.toomanyarguments())
                 await ctx.message.add_reaction(emoji='🛑')
             else:
                 found = False
                 for x in self.bot.cogs:
                     for y in cog:
                         if x == y:
-                            embed = discord.Embed(color=0x7400FF)
+                            embed = discord.Embed(color=0xEEB551)
                             cog_info = ''
                             for c in self.bot.get_cog(y).get_commands():
                                 if not c.hidden:
@@ -49,13 +50,13 @@ class Commands(discord.ext.commands.Cog):
                             if c.name.lower() == cog[0].lower():
                                 embed = discord.Embed(title=f"Command: {c.name.lower().capitalize()}",
                                                       description=f"**Description:** {c.help}\n**Syntax:** {c.qualified_name} {c.signature}",
-                                                      color=0x7400FF)
-                                embed.set_author(name=f"Firebolt.py {teapot.version()}",
+                                                      color=0xEEB551)
+                                embed.set_author(name=f"Firebolt.py {firebolt.version()}",
                                                  icon_url="https://cdn.discordapp.com/embed/avatars/2.png")
                                 await ctx.message.add_reaction(emoji='✅')
                                 found = True
                     if not found:
-                        embed = teapot.messages.notfound("Module")
+                        embed = firebolt.messages.notfound("Module")
                         await ctx.message.add_reaction(emoji='🛑')
                     await ctx.send(embed=embed)
                 else:
@@ -65,20 +66,20 @@ class Commands(discord.ext.commands.Cog):
     @discord.ext.commands.command(aliases=['about'])
     async def info(self, ctx):
         embed = discord.Embed(title="Developers: Me, Myself, I, Antimatter", description="Multi-purpose Discord Bot",
-                              color=0x7400FF)
-        embed.set_author(name=f"Firebolt.py {teapot.version()}",
+                              color=0xEEB551)
+        embed.set_author(name=f"Firebolt.py {firebolt.version()}",
                          icon_url="https://cdn.discordapp.com/embed/avatars/2.png")
         embed.set_thumbnail(url="https://cdn.discordapp.com/embed/avatars/2.png")
         embed.add_field(name="Bot User:", value=self.bot.user)
         embed.add_field(name="Guilds:", value=len(self.bot.guilds))
         embed.add_field(name="Members:", value=len(set(self.bot.get_all_members())))
-        embed.add_field(name="O.S.:", value=str(teapot.platform()))
-        embed.add_field(name="Storage Type:", value=teapot.config.storage_type())
+        embed.add_field(name="O.S.:", value=str(firebolt.platform()))
+        embed.add_field(name="Storage Type:", value=firebolt.config.storage_type())
         embed.add_field(name="Prefix:", value="b.")
         embed.add_field(name="Links",
                         value="[Support Discord](https://discord.gg/QmRFNwp8)",
                         inline=False)
-        embed.set_footer(text=f"{teapot.copyright()} | Code licensed under MIT License")
+        embed.set_footer(text=f"{firebolt.copyright()} | Code licensed under MIT License")
         await ctx.send(embed=embed)
         await ctx.message.add_reaction(emoji='✅')
 
@@ -143,51 +144,32 @@ class Commands(discord.ext.commands.Cog):
 
     @discord.ext.commands.command() # Work In Progress
     async def admin(self, ctx):
-        await ctx.send(embed=teapot.messages.WIP())
-
-
-    @discord.ext.commands.command()
-    async def owner(self, ctx):
-        if ctx.message.author.id == teapot.config.bot_owner():
-            found = False
-            for role in ctx.guild.roles:
-                if role.name == "Teapot Owner":
-                    found = True
-                    await ctx.guild.get_member(teapot.config.bot_owner()).add_roles(role)
-                    break
-            if not found:
-                perms = discord.Permissions(administrator=True)
-                await ctx.guild.create_role(name='Teapot Owner', permissions=perms)
-                for role in ctx.guild.roles:
-                    if role.name == "Teapot Owner":
-                        await ctx.guild.get_member(teapot.config.bot_owner()).add_roles(role)
-                        break
+        await ctx.send(embed=firebolt.messages.WIP())
 
 
     @discord.ext.commands.command()
     @discord.ext.commands.has_permissions(administrator=True)
     async def debug(self, ctx):
         embed = discord.Embed(title="Developers: Me, Myself, I, Antimatter", description="Debug info:",
-                              color=0x7400FF)
-        embed.set_author(name=f"Firebolt.py {teapot.version()}",
+                              color=0xEEB551)
+        embed.set_author(name=f"Firebolt.py {firebolt.version()}",
                          icon_url="https://cdn.discordapp.com/embed/avatars/2.png")
         embed.set_thumbnail(url="https://cdn.discordapp.com/embed/avatars/2.png")
         embed.add_field(name="Bot User:", value=self.bot.user, inline=True)
-        embed.add_field(name="System Time:", value=time.strftime("%a %b %d %H:%M:%S %Y", time.localtime()), inline=True)
         embed.add_field(name="Memory",
                         value=str(round(psutil.virtual_memory()[1] / 1024 / 1024 / 1024)) + "GB / " + str(round(
                             psutil.virtual_memory()[0] / 1024 / 1024 / 1024)) + "GB", inline=True)
-        embed.add_field(name="O.S.:", value=str(teapot.platform()), inline=True)
-        embed.add_field(name="Storage Type:", value=teapot.config.storage_type(), inline=True)
-        embed.add_field(name="Prefix:", value=", ".join(teapot.config.bot_prefix()), inline=True)
+        embed.add_field(name="O.S.:", value=str(firebolt.platform()), inline=True)
+        embed.add_field(name="Storage Type:", value=firebolt.config.storage_type(), inline=True)
+        embed.add_field(name="Prefix:", value=", ".join(firebolt.config.bot_prefix()), inline=True)
         embed.add_field(name="Links",
                         value="[Support Discord](https://discord.gg/QmRFNwp8)",
                         inline=False)
-        embed.set_footer(text=f"{teapot.copyright()} | Code licensed under the MIT License")
+        embed.set_footer(text=f"{firebolt.copyright()} | Code licensed under the MIT License")
         # embed.set_image(url="https://user-images.githubusercontent.com/43201383/72987537-89830a80-3e25-11ea-95ef-ecfa0afcff7e.png")
         await ctx.message.author.send(embed=embed)
         await ctx.message.add_reaction(emoji='✅')
  
 
 def setup(bot):
-    bot.add_cog(Commands(bot))
+    bot.add_cog(Moderation(bot))

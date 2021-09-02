@@ -1,6 +1,6 @@
 """ Database Manager """
 import mysql.connector
-import teapot
+import firebolt
 
 
 # TABLES = {}
@@ -25,11 +25,11 @@ import teapot
 def __init__():
     try:
         database = mysql.connector.connect(
-            host=teapot.config.db_host(),
-            port=teapot.config.db_port(),
-            db=teapot.config.db_schema(),
-            user=teapot.config.db_user(),
-            passwd=teapot.config.db_password(),
+            host=firebolt.config.db_host(),
+            port=firebolt.config.db_port(),
+            db=firebolt.config.db_schema(),
+            user=firebolt.config.db_user(),
+            passwd=firebolt.config.db_password(),
             charset='utf8mb4',
             use_unicode=True
         )
@@ -48,8 +48,8 @@ def db(database):
 
 
 def create_table(stmt):
-    database = teapot.managers.database.__init__()
-    db = teapot.managers.database.db(database)
+    database = firebolt.managers.database.__init__()
+    db = firebolt.managers.database.db(database)
 
     db.execute(stmt)
     db.close()
@@ -57,8 +57,8 @@ def create_table(stmt):
 
 
 def insert(stmt, var):
-    database = teapot.managers.database.__init__()
-    db = teapot.managers.database.db(database)
+    database = firebolt.managers.database.__init__()
+    db = firebolt.managers.database.db(database)
 
     db.execute(stmt, var)
     database.commit()
@@ -68,8 +68,8 @@ def insert(stmt, var):
 
 
 def insert_if_not_exists(stmt):
-    database = teapot.managers.database.__init__()
-    db = teapot.managers.database.db(database)
+    database = firebolt.managers.database.__init__()
+    db = firebolt.managers.database.db(database)
 
     db.execute(stmt)
     database.commit()
@@ -79,8 +79,8 @@ def insert_if_not_exists(stmt):
 
 
 def create_guild_table(guild):
-    database = teapot.managers.database.__init__()
-    db = teapot.managers.database.db(database)
+    database = firebolt.managers.database.__init__()
+    db = firebolt.managers.database.db(database)
 
     db.execute("SELECT * FROM `guilds` WHERE guild_id = '" + str(guild.id) + "'")
     if db.rowcount == 0:

@@ -5,10 +5,9 @@ import discord
 import lavalink
 from discord.ext import commands
 
-import teapot
-
+import firebolt
+import os
 url_rx = re.compile('https?:\\/\\/(?:www\\.)?.+')  # noqa: W605
-
 
 class Music(commands.Cog):
     """Music Time"""
@@ -18,7 +17,7 @@ class Music(commands.Cog):
 
         if not hasattr(bot, 'lavalink'):  # This ensures the client isn't overwritten during cog reloads.
             bot.lavalink = lavalink.Client(bot.user.id)
-            bot.lavalink.add_node("firebolt-lava.herokuapp.com",80,"password","eu","default-node")  # Host, Port, Password, Region, Name
+            bot.lavalink.add_node(os.environ['LAVALINK_HOST'],os.environ['LAVALINK_PORT'],os.environ["LAVALINK_PASSWORD"],"eu","music-node")  # Host, Port, Password, Region, Name
             bot.add_listener(bot.lavalink.voice_update_handler, 'on_socket_response')
 
         bot.lavalink.add_event_hook(self.track_hook)
@@ -50,9 +49,9 @@ class Music(commands.Cog):
     async def play(self, ctx, *, query: str):
         """ Searches and plays a song from a given query. """
         player = self.bot.lavalink.player_manager.get(ctx.guild.id)
-
+        
         query = query.strip('<>')
-
+        
         if not url_rx.match(query):
             query = f'ytsearch:{query}'
 

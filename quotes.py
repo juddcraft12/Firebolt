@@ -1,0 +1,1 @@
+nabify=["lmao","lol","me: spotol guess what\n spotol: what]\n me: chicken butt","LMAOOOO"]

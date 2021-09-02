@@ -7,7 +7,7 @@ from .cogs import *
 from .managers import *
 from .tools import *
 from .config import *
-from .events import *
+#from .events import *
 from .messages import *
 from .setup import *
 
@@ -30,9 +30,9 @@ def year():
 
 def copyright():
     if year() == "2020":
-        return "© 2020 RedCoke Development"
+        return "© 2020 Antimatterdev"
     else:
-        return f"© 2020-{year()} RedCoke Development"
+        return f"© 2020-{year()} Antimatterdev"
 
 
 def platform():

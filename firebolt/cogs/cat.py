@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from discord.ext import commands
 
-import teapot.tools.embed as dmbd
+import firebolt.tools.embed as dmbd
 
 
 class Cat(commands.Cog):

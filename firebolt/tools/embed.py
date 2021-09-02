@@ -1,11 +1,11 @@
 import discord
 
-import teapot
+import firebolt
 
 
-def newembed(c=0x428DFF):
+def newembed(c=0xEEB551):
     em = discord.Embed(colour=c)
-    em.set_footer(text=teapot.copyright(),
+    em.set_footer(text="Made by Antimatter",
                   icon_url="https://cdn.discordapp.com/embed/avatars/2.png")
 
     return em
